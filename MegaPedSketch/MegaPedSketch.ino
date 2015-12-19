@@ -48,16 +48,16 @@ void loop() {
   if (command.equals("")) {
     String command_name = "no command seen, sleeping for 10 seconds";
     announce(command_name);
-    delay(1000 * 10);
+    delay(1000 * 1);
   }
   else if (command.equals("C")) {
     run_command("Center stance", center_stance);
   }
-  else if (command.equals("a")) {
+  else if (command.equals("brf")) {
     center_stance();
     run_command("Balance on right foot", balance_on_right_foot);
   }
-  else if (command.equals("e")) {
+  else if (command.equals("blf")) {
     center_stance();
     run_command("Balance on left foot", balance_on_left_foot);
   }
