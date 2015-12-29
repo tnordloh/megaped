@@ -5,10 +5,10 @@ Servo left_hip; // create servo object to control left hip
 Servo left_ankle; // create servo object to control left ankle
 Servo right_hip; // create servo object to control right hip
 Servo right_ankle; // create servo object to control right ankle
-int cur_pos_right_ankle = 90;
-int cur_pos_left_ankle  = 90;
-int cur_pos_right_hip   = 90;
-int cur_pos_left_hip    = 90;
+int cur_pos_right_ankle = 90,
+    cur_pos_left_ankle  = 90,
+    cur_pos_right_hip   = 90,
+    cur_pos_left_hip    = 90;
 
 
 void attach_servos() {
@@ -79,8 +79,26 @@ void center_stance() {
   move_right_ankle(90);
 }
 
+boolean is_centered() {
+  if( cur_pos_right_ankle == 90 &&
+      cur_pos_left_ankle  == 90 &&
+      cur_pos_right_hip   == 90 &&
+      cur_pos_left_hip    == 90
+    ) { 
+    return true; 
+  }
+  return false;
+}
+
+void reset_to_center_with_delay() {
+  if(is_centered()) {
+  } else {
+    center_stance();
+    delay(800); //entry pause for next step
+  }
+}
+
 void balance_on_right_foot() {
-  delay(800); //entry pause for next step
   //move_left_ankle(5); //pitch left ankle to the right boosting lean
   move_left_ankle(60);
   delay(400);
@@ -94,7 +112,6 @@ void balance_on_right_foot() {
 }
 
 void balance_on_left_foot() {
-  delay(800); //entry pause for next step
   //move_right_ankle(175); //pitch right ankle to the left boosting lean
   move_right_ankle(120);
   delay(400);
@@ -108,7 +125,7 @@ void balance_on_left_foot() {
 }
 
 void step_forward() {
-  center_stance();
+  reset_to_center_with_delay();
   balance_on_right_foot();
   delay(400);
   move_left_hip(90); //reset left hip (incase we had previously stepped with it)
@@ -132,14 +149,10 @@ void step_forward() {
   move_left_ankle(90);
   delay(800); //exit pause for next step
   center_stance(); //full joint reset:
-
-
 }
 
 void step_backward() {
-  center_stance();
-  
-  delay(800); //entry pause for next step
+  reset_to_center_with_delay();
   balance_on_right_foot();
   delay(400);
   move_left_ankle(90);
@@ -164,7 +177,7 @@ void step_backward() {
 }
 
 void turn_left() {
-  center_stance();
+  reset_to_center_with_delay();
   for (int x = 0; x <= 2; x++) {
     balance_on_right_foot();
     delay(400);
@@ -177,10 +190,11 @@ void turn_left() {
 }
 
 void turn_right() {
+  reset_to_center_with_delay();
   for (int x = 0; x <= 2; x++) {
     balance_on_left_foot();
     delay(400);
-    move_left_ankle(90); //full reset of right ankle
+    move_left_ankle(90); //full reset of left ankle
     delay(400);
     move_right_hip(68);
     move_left_ankle(90);

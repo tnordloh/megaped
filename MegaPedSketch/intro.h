@@ -1,4 +1,4 @@
- static char *WELCOME_TEXT = 
+ static const char *WELCOME_TEXT = 
  "Power Up Biped Serial COMM's\n" 
  "MegaPed Project by Ryan Matthews: ryan@megamatthews.com\n" 
  "\n" 
@@ -25,4 +25,3 @@
  "Let's walk!\n" 
  "____________________________\n" ;
  
- static char *RIGHT_HIP = "right_hip.";
